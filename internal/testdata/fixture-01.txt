@@ -1,0 +1,84 @@
+├── error interface {
+│       Error() string
+│   }
+├── github.com
+│   └── dtgorski
+│       └── typex
+│           └── internal
+│               └── testdata
+│                   ├── p1
+│                   │   ├── I interface {
+│                   │   │       F()
+│                   │   │   }
+│                   │   ├── J struct {}
+│                   │   ├── S struct {
+│                   │   │       p1.T
+│                   │   │       p1.X
+│                   │   │       XX *p1.X
+│                   │   │       p1.I
+│                   │   │   }
+│                   │   ├── T struct {
+│                   │   │       p1.X		`embedded:"",json:"-"`
+│                   │   │       UnExported bool		`json:"-"`
+│                   │   │       AnyTagName bool		`json:"otherTagName"`
+│                   │   │       Ä struct {
+│                   │   │           B []map[int]struct {
+│                   │   │               C *p1.T
+│                   │   │               DDD [][]*p2.T
+│                   │   │               E struct {
+│                   │   │                   F []struct {
+│                   │   │                       G map[string]map[p2.I]**p1.S
+│                   │   │                       HHH map[p3.U][10]string
+│                   │   │                   }
+│                   │   │               }
+│                   │   │           }
+│                   │   │       }
+│                   │   │   }
+│                   │   ├── X struct {
+│                   │   │       Y map[*int64]**p1.x
+│                   │   │       Z map[*p1.X]time.Duration
+│                   │   │   }
+│                   │   └── x map[int64]time.Time
+│                   └── p2
+│                       ├── F func(*p2.I, ...*p3.U) (p2.T, error)
+│                       ├── I int
+│                       ├── S struct {
+│                       │       Fn **p2.F
+│                       │   }
+│                       ├── T struct {
+│                       │       ArrayType [10]string
+│                       │       BoolType bool
+│                       │       IntType p2.I
+│                       │       Int8Type int8
+│                       │       Int16Type int16
+│                       │       Int32Type int32
+│                       │       Int64Type int64
+│                       │       UintType p3.U
+│                       │       Uint8Type uint8
+│                       │       Uint16Type uint16
+│                       │       Uint32Type uint32
+│                       │       Uint64Type uint64
+│                       │       ByteType byte
+│                       │       RuneType rune
+│                       │       UintPtrType uintptr
+│                       │       Float32Type float32
+│                       │       Float64Type float64
+│                       │       InterfaceType interface {
+│                       │           Foo() (int, error)
+│                       │       }
+│                       │       FuncType **func(x int, y int, z int) (int, error)
+│                       │       ChanType <-chan *bool
+│                       │       Complex64Type complex64
+│                       │       Complex128Type complex128
+│                       │       MapType map[*int]string
+│                       │       StringType string
+│                       │       StructType struct {}
+│                       │       SliceType []string
+│                       │       FuncStruct chan<- *p2.S		`json:"foo"`
+│                       │       Types *p2.T		`tags:"bar"`
+│                       │   }
+│                       └── p3
+│                           └── U uint
+└── time
+    ├── Duration int64
+    └── Time struct {}

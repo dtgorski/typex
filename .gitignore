@@ -1,0 +1,10 @@
+.*
+_*
+*.out
+*.log
+*.html
+*.test
+*.env
+*.tmp
+/bin
+!.gitignore
