@@ -10,6 +10,12 @@ Examine [Go](https://golang.org/) types and their transitive dependencies.
 go get -u github.com/dtgorski/typex
 ```
 
+### Synopsis
+This CLI tool filters and displays Go type structures, interfaces and their relationships across package boundaries.
+It prints out a type hierarchy tree with additional references to transitive dependencies vital for the filtered types.
+
+The main motivation behind typex is to get a quick overview of structures of third-party Go packages.
+
 ### CLI example output
 ```
 $ typex -f Rune io/...
