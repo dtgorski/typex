@@ -128,7 +128,8 @@ Examples:
      $ typex github.com/your/repository/...
 
 This tool relies heavily on Go's package managing subsystem
-is bound to its features and environmental execution context.
+and is bound to its features and environmental execution
+context.
 
 Sources: <https://github.com/dtgorski/typex>
 `)
