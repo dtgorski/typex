@@ -19,7 +19,7 @@ install: clean          # Compiles and installs typex in Go environment
 	@go install -trimpath -ldflags "-s -w" .
 
 test: clean             # Runs tests, reports coverage
-	@go test -v -count=1 -covermode=atomic -coverprofile=./coverage.out ./internal/
+	@go test -v -count=1 -covermode=atomic -coverprofile=./coverage.out -coverpkg=./internal/... ./internal/...
 	@go tool cover -html=./coverage.out -o ./coverage.html && echo "coverage: <file://$(PWD)/coverage.html>"
 
 tidy:                  # Formats source files, cleans go.mod

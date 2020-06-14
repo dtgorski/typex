@@ -1,0 +1,108 @@
+├── error interface {
+│       Error() string
+│   }
+├── p1
+│   ├── A int64
+│   ├── B []time.Duration
+│   ├── D struct {
+│   │       F bool		`json:"-,opt1,opt2"`
+│   │       p1.G		`embedded:"" json:"-"`
+│   │       H []map[int]struct {
+│   │           I []p1.D
+│   │           J [][]*p2.T
+│   │           K struct {
+│   │               L []struct {
+│   │                   N map[p3.U][10]string
+│   │                   O map[int]*[]struct {
+│   │                       P func() interface {}
+│   │                   }
+│   │                   Q map[int][]*func(interface {}) (<-chan chan<- bool, int)
+│   │               }
+│   │           }
+│   │       }
+│   │       R map[*int64]**p1.W
+│   │       S bool		`json:"other,omitempty"`
+│   │   }
+│   ├── G struct {
+│   │       D map[string]time.Duration
+│   │       E map[string]p1.B
+│   │       p1.U
+│   │       Y <-chan chan<- p1.D
+│   │   }
+│   ├── T struct {
+│   │       p1.D
+│   │       p1.W
+│   │       U **p1.Y
+│   │       V *p1.A
+│   │       p1.X
+│   │       p3.Y
+│   │       Z p1.U
+│   │   }
+│   ├── U []struct {
+│   │       V *p1.U
+│   │   }
+│   ├── W map[int64]time.Time
+│   ├── X interface {
+│   │       E() error
+│   │   }
+│   ├── Y interface {
+│   │       p1.X
+│   │       E() error
+│   │       P() uintptr
+│   │   }
+│   └── z interface {}
+├── p2
+│   ├── F func(*p2.I, ...*p3.U) (p2.T, error)
+│   ├── I int
+│   ├── S struct {
+│   │       Fn **p2.F
+│   │   }
+│   ├── T struct {
+│   │       ArrayType [10]string
+│   │       BoolType bool
+│   │       IntType p2.I
+│   │       Int8Type int8
+│   │       Int16Type int16
+│   │       Int32Type int32
+│   │       Int64Type int64
+│   │       UintType p3.U
+│   │       Uint8Type uint8
+│   │       Uint16Type uint16
+│   │       Uint32Type uint32
+│   │       Uint64Type uint64
+│   │       ByteType byte
+│   │       RuneType rune
+│   │       UintPtrType uintptr
+│   │       Float32Type float32
+│   │       Float64Type float64
+│   │       InterfaceType interface {
+│   │           Foo() (int, error)
+│   │       }
+│   │       FuncType **func(x int, y int, z ...int) (int, error)
+│   │       FuncType_ func(x int, y int, z int) chan *struct {}
+│   │       ChanType <-chan *bool
+│   │       Complex64Type complex64
+│   │       Complex128Type complex128
+│   │       MapType map[*int]string
+│   │       MapType_ map[string]chan *struct {}
+│   │       StringType string
+│   │       StructType struct {}
+│   │       SliceType []string
+│   │       FuncStruct chan<- *p2.S		`json:"funcStruct"`
+│   │       Types *p2.T		`tags:"types"`
+│   │   }
+│   └── p3
+│       ├── U uint
+│       ├── Y struct {
+│       │       M interface {}
+│       │       N map[[10]p3.U]interface {}
+│       │       O map[int]map[int]interface {}
+│       │       P map[p3.U]func()
+│       │       Q [10]**interface {}
+│       │       R []*map[p3.U]*interface {}
+│       │       S map[*p3.Z]*p3.Z
+│       │   }
+│       └── Z interface {}
+└── time
+    ├── Duration int64
+    └── Time struct {}

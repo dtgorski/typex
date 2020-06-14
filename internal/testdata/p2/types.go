@@ -1,4 +1,4 @@
-// MIT license · Daniel T. Gorski · dtg [at] lengo [dot] org · 03/2020
+// MIT license · Daniel T. Gorski · dtg [at] lengo [dot] org · 06/2020
 
 package p2
 
@@ -8,6 +8,8 @@ import (
 
 type (
 	I int
+	F func(*I, ...*p3.U) (T, error)
+	S struct{ Fn **F }
 
 	T struct {
 		ArrayType     [10]string
@@ -30,19 +32,18 @@ type (
 		InterfaceType interface {
 			Foo() (int, error)
 		}
-		FuncType       **func(x, y, z int) (int, error)
+		FuncType       **func(x, y int, z ...int) (int, error)
+		FuncType_      func(x, y, z int) chan *struct{}
 		ChanType       <-chan *bool
 		Complex64Type  complex64
 		Complex128Type complex128
 		MapType        map[*int]string
+		MapType_       map[string]chan *struct{}
 		StringType     string
 		StructType     struct{}
 		SliceType      []string
 
-		FuncStruct chan<- *S `json:"foo"`
-		Types      *T        `tags:"bar"`
+		FuncStruct chan<- *S `json:"funcStruct"`
+		Types      *T        `tags:"types"`
 	}
-
-	F func(*I, ...*p3.U) (T, error)
-	S struct{ Fn **F }
 )

@@ -1,4 +1,4 @@
-// MIT license · Daniel T. Gorski · dtg [at] lengo [dot] org · 03/2020
+// MIT license · Daniel T. Gorski · dtg [at] lengo [dot] org · 06/2020
 
 package p1
 
@@ -10,55 +10,62 @@ import (
 )
 
 type (
-	T struct {
-		notExported bool
-		X           `embedded:"",json:"-"`
-		UnExported  bool `json:"-"`
-		AnyTagName  bool `json:"otherTagName"`
+	A time.Duration
+	B []time.Duration
 
-		Ä struct {
-			B []map[int]struct {
-				C   *T
-				DDD [][]*p2.T
-				E   struct {
-					F []struct {
-						G   map[string]map[p2.I]**S
-						HHH map[p3.U][10]string
+	G struct {
+		D map[string]time.Duration
+		E map[string]B
+		U
+		Y <-chan chan<- D
+		Z z
+	}
+
+	D struct {
+		e bool
+		F bool `json:"-,opt1,opt2"`
+		G `embedded:"" json:"-"`
+		H []map[int]struct {
+			I []D
+			J [][]*p2.T
+			K struct {
+				L []struct {
+					m map[string]map[p2.I]**T
+					N map[p3.U][10]string
+					O map[int]*[]struct {
+						P func() interface{}
 					}
+					Q map[int][]*func(interface{}) (<-chan chan<- bool, int)
 				}
 			}
 		}
+		R map[*int64]**W
+		S bool `json:"other,omitempty"`
 	}
 
-	S struct {
-		T
-		x
+	T struct {
+		D
+		W
+		U **Y
+		V *A
 		X
-		XX *X
-		I
+		p3.Y
+		Z U
 	}
 
-	X struct {
-		Y map[*int64]**x
-		Z map[*X]time.Duration
+	U []struct {
+		V *U
 	}
 
-	x map[int64]time.Time
+	W map[int64]time.Time
 
-	i interface {
-		g()
+	X interface {
+		E() error
+		e()
 	}
-	I interface {
-		i
-		F()
-		f()
+	Y interface {
+		X
+		P() uintptr
 	}
-
-	j struct {
-		*J
-		uintptr
-	}
-	J struct {
-		j
-	}
+	z interface{}
 )

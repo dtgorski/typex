@@ -1,0 +1,108 @@
+export module p1 {
+    export type A = number
+    export type B = time.Duration[]
+    export class D {
+        constructor(
+            readonly H: Record<number, {
+                readonly I: p1.D[],
+                readonly J: p2.T[][],
+                readonly K: {
+                    readonly L: {
+                        readonly N: Record<p2.p3.U, string[/* 10 */]>,
+                        readonly O: Record<number, {
+                            readonly P: any,
+                        }[]>,
+                        readonly Q: Record<number, any[]>,
+                    }[],
+                },
+            }>[],
+            readonly R: Record<symbol, p1.W>,
+            readonly other?: boolean,
+        ) {}
+    }
+    export class G {
+        constructor(
+            readonly D: Record<string, time.Duration>,
+            readonly E: Record<string, p1.B>,
+            readonly U: p1.U,
+            readonly Y: any,
+        ) {}
+    }
+    export class T {
+        constructor(
+            readonly D: p1.D,
+            readonly W: p1.W,
+            readonly U: any,
+            readonly V: p1.A,
+            readonly X: any,
+            readonly Y: p2.p3.Y,
+            readonly Z: p1.U,
+        ) {}
+    }
+    export type U = {
+        V: p1.U,
+    }[]
+    export type W = Record<number, time.Time>
+}
+export module p2 {
+    export type I = number
+    export class S {
+        constructor(
+            readonly Fn: any,
+        ) {}
+    }
+    export class T {
+        constructor(
+            readonly ArrayType: string[/* 10 */],
+            readonly BoolType: boolean,
+            readonly IntType: p2.I,
+            readonly Int8Type: number,
+            readonly Int16Type: number,
+            readonly Int32Type: number,
+            readonly Int64Type: number,
+            readonly UintType: p2.p3.U,
+            readonly Uint8Type: number,
+            readonly Uint16Type: number,
+            readonly Uint32Type: number,
+            readonly Uint64Type: number,
+            readonly ByteType: number,
+            readonly RuneType: number,
+            readonly UintPtrType: number,
+            readonly Float32Type: number,
+            readonly Float64Type: number,
+            readonly InterfaceType: any,
+            readonly FuncType: any,
+            readonly FuncType_: any,
+            readonly ChanType: any,
+            readonly Complex64Type: number,
+            readonly Complex128Type: number,
+            readonly MapType: Record<symbol, string>,
+            readonly MapType_: Record<string, any>,
+            readonly StringType: string,
+            readonly StructType: {},
+            readonly SliceType: string[],
+            readonly funcStruct: any,
+            readonly Types: p2.T,
+        ) {}
+    }
+    export module p3 {
+        export type U = number
+        export class Y {
+            constructor(
+                readonly M: any,
+                readonly N: Record<symbol, any>,
+                readonly O: Record<number, Record<number, any>>,
+                readonly P: Record<p2.p3.U, any>,
+                readonly Q: any[/* 10 */],
+                readonly R: Record<p2.p3.U, any>[],
+                readonly S: Record<symbol, any>,
+            ) {}
+        }
+    }
+}
+export module time {
+    export type Duration = number
+    export class Time {
+        constructor() {}
+    }
+}
