@@ -1,0 +1,94 @@
+export module p1 {
+    export type A = number
+    export type B = time.Duration[]
+    export type D = {
+        H: Record<number, {
+            I: p1.D[],
+            J: p2.T[][],
+            K: {
+                L: {
+                    N: Record<p2.p3.U, string[/* 10 */]>,
+                    O: Record<number, {
+                        P: any,
+                    }[]>,
+                    Q: Record<number, any[]>,
+                }[],
+            },
+        }>[],
+        R: Record<symbol, p1.W>,
+        other?: boolean,
+    }
+    export type G = {
+        D: Record<string, time.Duration>,
+        E: Record<string, p1.B>,
+        U: p1.U,
+        Y: any,
+    }
+    export type T = {
+        D: p1.D,
+        W: p1.W,
+        U: any,
+        V: p1.A,
+        X: any,
+        Y: p2.p3.Y,
+        Z: p1.U,
+    }
+    export type U = {
+        V: p1.U,
+    }[]
+    export type W = Record<number, time.Time>
+}
+export module p2 {
+    export type I = number
+    export type S = {
+        Fn: any,
+    }
+    export type T = {
+        ArrayType: string[/* 10 */],
+        BoolType: boolean,
+        IntType: p2.I,
+        Int8Type: number,
+        Int16Type: number,
+        Int32Type: number,
+        Int64Type: number,
+        UintType: p2.p3.U,
+        Uint8Type: number,
+        Uint16Type: number,
+        Uint32Type: number,
+        Uint64Type: number,
+        ByteType: number,
+        RuneType: number,
+        UintPtrType: number,
+        Float32Type: number,
+        Float64Type: number,
+        InterfaceType: any,
+        FuncType: any,
+        FuncType_: any,
+        ChanType: any,
+        Complex64Type: number,
+        Complex128Type: number,
+        MapType: Record<symbol, string>,
+        MapType_: Record<string, any>,
+        StringType: string,
+        StructType: {},
+        SliceType: string[],
+        funcStruct: any,
+        Types: p2.T,
+    }
+    export module p3 {
+        export type U = number
+        export type Y = {
+            M: any,
+            N: Record<symbol, any>,
+            O: Record<number, Record<number, any>>,
+            P: Record<p2.p3.U, any>,
+            Q: any[/* 10 */],
+            R: Record<p2.p3.U, any>[],
+            S: Record<symbol, any>,
+        }
+    }
+}
+export module time {
+    export type Duration = number
+    export type Time = {}
+}

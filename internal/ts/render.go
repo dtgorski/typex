@@ -26,14 +26,16 @@ type (
 	context struct {
 		writer   io.Writer
 		seenType []types.Type
-		isStruct bool
 		needCtor bool
+		expoObjs bool
 	}
 )
 
 // Render ...
-func (r *TypeRender) Render(m typex.TypeMap) typex.PathMap {
+func (r *TypeRender) Render(m typex.TypeMap, exportObjs bool) typex.PathMap {
 	r.indent = 0
+
+	expoObj := exportObjs
 	pathMap := make(typex.PathMap)
 
 	for p, t := range m {
@@ -42,12 +44,19 @@ func (r *TypeRender) Render(m typex.TypeMap) typex.PathMap {
 		}
 		path, name := r.pathAndName(p)
 		buf, typ := bytes.Buffer{}, t.Underlying()
-		_, isStruct := typ.(*types.Struct)
 
-		ctx := context{&buf, make([]types.Type, 0), isStruct, true}
+		if expoObj = exportObjs; expoObj {
+			_, expoObj = typ.(*types.Struct)
+		}
+		ctx := context{
+			writer:   &buf,
+			seenType: make([]types.Type, 0),
+			needCtor: expoObj,
+			expoObjs: expoObj,
+		}
 		r.writeType(ctx, typ)
 
-		if isStruct {
+		if expoObj {
 			pathMap[path] = "export class " + name + " " + buf.String()
 		} else {
 			pathMap[path] = "export type " + name + " = " + buf.String()
@@ -145,7 +154,7 @@ func (r *TypeRender) writeStruct(ctx context, t *types.Struct) {
 	r.indent++
 	r.write(ctx, "{")
 
-	ctor := ctx.needCtor && ctx.isStruct
+	ctor := ctx.needCtor && ctx.expoObjs
 	if ctor {
 		ctx.needCtor = false
 		r.write(ctx, "\n")
@@ -173,7 +182,7 @@ func (r *TypeRender) writeStruct(ctx context, t *types.Struct) {
 		}
 		r.write(ctx, "\n")
 		r.writePadding(ctx)
-		if ctx.isStruct {
+		if ctx.expoObjs {
 			r.write(ctx, "readonly ")
 		}
 		if tag != "" {

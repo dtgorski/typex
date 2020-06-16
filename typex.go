@@ -57,8 +57,10 @@ func main() {
 	switch *opts.outputLayout {
 	case "go":
 		err = exportGo(opts, types)
-	case "ts":
-		err = exportTs(opts, types)
+	case "ts-type":
+		err = exportTs(opts, types, false)
+	case "ts-class":
+		err = exportTs(opts, types, true)
 	}
 	if err != nil {
 		die(err)
@@ -76,7 +78,7 @@ func exportGo(opts options, types typex.TypeMap) error {
 	return tw.Walk(tr.Render(types))
 }
 
-func exportTs(opts options, types typex.TypeMap) error {
+func exportTs(opts options, types typex.TypeMap, exportObjs bool) error {
 	tr := ts.TypeRender{
 		PathReplaceFunc:   typex.CreatePathReplaceFunc(opts.replaceParts),
 		IncludeUnexported: *opts.includeUnexp,
@@ -84,14 +86,14 @@ func exportTs(opts options, types typex.TypeMap) error {
 	tw := typex.TreeWalker{
 		Layout: ts.NewModuleLayout(os.Stdout),
 	}
-	return tw.Walk(tr.Render(types))
+	return tw.Walk(tr.Render(types, exportObjs))
 }
 
 func getOptions() (options, error) {
 	opts := options{
 		filterParts:  flagArray{},
 		replaceParts: flagArray{},
-		outputLayout: flag.String("l", "go", ""),
+		outputLayout: flag.String("l", "", ""),
 		includeTests: flag.Bool("t", false, ""),
 		includeUnexp: flag.Bool("u", false, ""),
 		printVersion: flag.Bool("v", false, ""),
@@ -101,8 +103,9 @@ func getOptions() (options, error) {
 	flag.Usage = usage
 	flag.Parse()
 
-	if *opts.outputLayout != "go" &&
-		*opts.outputLayout != "ts" {
+	switch *opts.outputLayout {
+	case "go", "ts-type", "ts-class":
+	default:
 		*opts.outputLayout = "go"
 	}
 
@@ -129,8 +132,8 @@ func write(w io.Writer, f string, a ...interface{}) {
 func usage() {
 	write(flag.CommandLine.Output(), `
 Usage: typex [options] package...
-Examine Go types and their transitive dependencies or export
-structural types as TypeScript value object representations.
+Examine Go types and their transitive dependencies. Export
+results as TypeScript value objects (or types) declaration.
 
 Options:
     -f <name>
@@ -147,9 +150,10 @@ Options:
         transitive dependencies vital for the filtered types.
 
     -l <layout>
-        Modify the presentation layout. Available layouts are:
-        "go", which is the default Go typex tree and "ts",
-        an experimental TypeScript value objects projection.
+        Modify the export layout. Available layouts are:
+          * "go":       the default Go type dependency tree
+          * "ts-type":  TypeScript type declaration projection
+          * "ts-class": TypeScript value object projection
 
     -r <old-path>:<new-path>
         Replace matching portions of <old-path> in a fully
@@ -181,7 +185,7 @@ Examples:
     $ typex -u go/...
     $ typex -u -f=URL net/url
     $ typex github.com/your/repository/...
-    $ typex -l=ts github.com/your/repository/...
+    $ typex -l=ts-type github.com/your/repository/...
     $ typex -r=github.com:a/b/c github.com/your/repository/...
 
 This tool relies heavily on Go's package managing subsystem and

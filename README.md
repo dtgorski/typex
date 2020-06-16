@@ -3,24 +3,24 @@
 
 ## typex
 
-Examine [Go](https://golang.org/) types and their transitive dependencies or export
-structural types as TypeScript value object representations.
+Examine [Go](https://golang.org/) types and their transitive dependencies. Export results as TypeScript value objects (or types) declaration.
+
 ### Installation
 ```
 go get -u github.com/dtgorski/typex
 ```
 
 ### Synopsis
-```typex``` filters and displays [Go](https://golang.org/) type structures, interfaces and their relationships across package boundaries.
-It prints out a type hierarchy tree with additional references to transitive dependencies vital for the filtered types.
+The CLI command ```typex``` filters and displays [Go](https://golang.org/) type structures, interfaces and their relationships across package boundaries.
+It generates a type hierarchy tree with additional references to transitive dependencies vital for the filtered types.
+As an additional feature, ```typex``` exports the result tree as a [TypeScript](https://www.typescriptlang.org/) projection representing value objects or bare types.
 
-As an experimental feature, ```typex``` exports the result tree as a [TypeScript](https://www.typescriptlang.org/) projection representing value objects.
-
-### Go type hierarchy layout
-
-* Find (```-f```) the type name ```Rune``` in the package ```io``` and all its subpackages:
+### Examples
+**Go type hierarchy layout**
   ```
   $ typex -f=Rune io/...
+  ```
+  ```
   ├── error interface {
   │       Error() string
   │   }
@@ -35,25 +35,11 @@ As an experimental feature, ```typex``` exports the result tree as a [TypeScript
           }
   ```
 
-* Find (```-f```) the type name ```internal.Layout``` in the package ```github.com/dtgorski/typex``` and all its subpackages:
+**TypeScript value object layout**
   ```
-  $ typex -f=internal.Layout github.com/dtgorski/typex/...
-  └── github.com
-      └── dtgorski
-          └── typex
-              └── internal
-                  └── Layout interface {
-                          Enter(path string, last bool)
-                          Leave(path string, last bool)
-                          Print(line string, first bool, last bool)
-                      }
+  $ typex -f=File -l=ts-class mime/multipart
   ```
-
-### TypeScript value object layout
-
-* Find (```-f```) the type name ```File``` in the package ```mime/multipart```, apply the TypeScript layout (```-l```):
   ```
-  $ typex -f=File -l=ts mime/multipart
   export module mime {
       export module multipart {
           export class FileHeader {
@@ -72,16 +58,18 @@ As an experimental feature, ```typex``` exports the result tree as a [TypeScript
   }
   ```
 
-* Find (```-f```) the type name ```File``` in the package ```mime/multipart```, apply the TypeScript layout (```-l```) and relocate (```-r```) the module ```mime/multipart``` to a new ```other``` hierarchy:
+**TypeScript bare type layout**
   ```
-  $ typex -f=File -l=ts -r=mime/multipart:other mime/multipart
-  export module other {
-      export class FileHeader {
-          constructor(
-              readonly Filename: string,
-              readonly Header: net.textproto.MIMEHeader,
-              readonly Size: number,
-          ) {}
+  $ typex -f=File -l=ts-type mime/multipart
+  ```
+  ```
+  export module mime {
+      export module multipart {
+          export type FileHeader = {
+              Filename: string,
+              Header: net.textproto.MIMEHeader,
+              Size: number,
+          }
       }
   }
   export module net {
@@ -89,7 +77,7 @@ As an experimental feature, ```typex``` exports the result tree as a [TypeScript
           export type MIMEHeader = Record<string, string[]>
       }
   }
-    ```
+  ```
 
 ### TypeScript and reserved keywords
 Basically, the names of types and fields will be exported from Go without modification.
@@ -126,10 +114,11 @@ You should keep this in mind when working with exported numeric types - this inc
 
 ```
 $ typex -h
-
+```
+```
 Usage: typex [options] package...
-Examine Go types and their transitive dependencies or export
-structural types as TypeScript value object representations.
+Examine Go types and their transitive dependencies. Export
+results as TypeScript value objects (or types) declaration.
 
 Options:
     -f <name>
@@ -146,9 +135,10 @@ Options:
         transitive dependencies vital for the filtered types.
 
     -l <layout>
-        Modify the presentation layout. Available layouts are:
-        "go", which is the default Go typex tree and "ts",
-        an experimental TypeScript value objects projection.
+        Modify the export layout. Available layouts are:
+          * "go":       the default Go type dependency tree
+          * "ts-type":  TypeScript type declaration projection
+          * "ts-class": TypeScript value object projection
 
     -r <old-path>:<new-path>
         Replace matching portions of <old-path> in a fully
@@ -180,7 +170,7 @@ Examples:
     $ typex -u go/...
     $ typex -u -f=URL net/url
     $ typex github.com/your/repository/...
-    $ typex -l=ts github.com/your/repository/...
+    $ typex -l=ts-type github.com/your/repository/...
     $ typex -r=github.com:a/b/c github.com/your/repository/...
 
 This tool relies heavily on Go's package managing subsystem and
