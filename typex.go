@@ -17,7 +17,8 @@ import (
 
 type (
 	options struct {
-		filterParts  flagArray
+		includeParts flagArray
+		excludeParts flagArray
 		replaceParts flagArray
 		pathPatterns []string
 		outputLayout *string
@@ -29,29 +30,30 @@ type (
 )
 
 func main() {
-	die := func(err error) {
+	write := func(msg string) {
 		out := flag.CommandLine.Output()
-		_, _ = fmt.Fprintf(out, "typex: %s\n", err)
+		_, _ = fmt.Fprintf(out, "typex: %s\n", msg)
+	}
+
+	opts, err := getOpts()
+	if err != nil {
+		write(err.Error())
 		os.Exit(1)
 	}
-	opts, err := getOptions()
-	if err != nil {
-		die(err)
-	}
 	if *opts.printVersion {
-		out := flag.CommandLine.Output()
-		write(out, "typex: %s %s/%s\n", Version, runtime.GOOS, runtime.GOARCH)
-		return
+		write(Version + " " + runtime.GOOS + " " + runtime.GOARCH)
+		os.Exit(0)
 	}
 
 	pac := typex.Packagist{
-		PathFilterFunc:    typex.CreatePathFilterFunc(opts.filterParts),
+		PathFilterFunc:    typex.CreatePathFilterFunc(opts.includeParts, opts.excludeParts),
 		IncludeUnexported: *opts.includeUnexp,
 		IncludeTestFiles:  *opts.includeTests,
 	}
 	types, err := pac.Inspect(opts.pathPatterns...)
 	if err != nil {
-		die(err)
+		write(err.Error())
+		os.Exit(1)
 	}
 
 	switch *opts.outputLayout {
@@ -63,7 +65,8 @@ func main() {
 		err = exportTs(opts, types, true)
 	}
 	if err != nil {
-		die(err)
+		write(err.Error())
+		os.Exit(1)
 	}
 }
 
@@ -89,16 +92,18 @@ func exportTs(opts options, types typex.TypeMap, exportObjs bool) error {
 	return tw.Walk(tr.Render(types, exportObjs))
 }
 
-func getOptions() (options, error) {
+func getOpts() (options, error) {
 	opts := options{
-		filterParts:  flagArray{},
+		includeParts: flagArray{},
+		excludeParts: flagArray{},
 		replaceParts: flagArray{},
 		outputLayout: flag.String("l", "", ""),
 		includeTests: flag.Bool("t", false, ""),
 		includeUnexp: flag.Bool("u", false, ""),
 		printVersion: flag.Bool("v", false, ""),
 	}
-	flag.Var(&opts.filterParts, "f", "")
+	flag.Var(&opts.includeParts, "f", "")
+	flag.Var(&opts.excludeParts, "x", "")
 	flag.Var(&opts.replaceParts, "r", "")
 	flag.Usage = usage
 	flag.Parse()
@@ -110,8 +115,8 @@ func getOptions() (options, error) {
 	}
 
 	opts.pathPatterns = flag.Args()
-	if len(opts.filterParts) == 0 {
-		opts.filterParts = []string{".*"}
+	if len(opts.includeParts) == 0 {
+		opts.includeParts = []string{".*"}
 	}
 	return opts, nil
 }
@@ -159,7 +164,7 @@ Options:
         Replace matching portions of <old-path> in a fully
         qualified type name with <new-path> string. Repeating
         the -r option is allowed, substitutions will perform
-        successively. The <old-path> can a regular expression.
+        successively. <old-path> can be a regular expression.
         
         The path replacement/relocation can be used to modify
         locations of type hierarchies, e.g. prune off the
@@ -167,10 +172,16 @@ Options:
         by omitting the <new-path> part after the colon. 
 
     -t  Go tests (files suffixed _test.go) will be included
-        in the result tree available for a filter expression.
-    
+        in the result tree available for a filter expression
+
     -u  Unexported types (lowercase names) will be included
         in the result tree available for a filter expression.
+
+    -x <name> 
+        Exclude type names from export. Repeating this option
+        is allowed, all expressions aggregate to an OR query.
+        The exclusion filter can be a type name, a path part
+        or a regular expression.
 
 More options:
     -h  Display this usage help and exit.

@@ -64,7 +64,7 @@ func TestInspector_Inspect_4(t *testing.T) {
 	pkgPath := reflect.TypeOf(TestType{}).PkgPath()
 
 	pac := Packagist{
-		PathFilterFunc:    CreatePathFilterFunc([]string{"TestType", "invalid[regex"}),
+		PathFilterFunc:    CreatePathFilterFunc([]string{"TestType", "invalid[regex"}, []string{"["}),
 		IncludeTestFiles:  true,
 		IncludeUnexported: true,
 	}

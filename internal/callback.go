@@ -10,26 +10,46 @@ import (
 // CreatePathFilterFunc gets a list of text patterns which are converted
 // to regular expressions. The result of this function is a PathFilterFunc
 // which can be used as a filter for matching patterns against strings.
-func CreatePathFilterFunc(list []string) PathFilterFunc {
-	filter := make([]*regexp.Regexp, 0)
+func CreatePathFilterFunc(include, exclude []string) PathFilterFunc {
+	included := make([]*regexp.Regexp, 0)
+	excluded := make([]*regexp.Regexp, 0)
 
-	for _, expr := range list {
+	for _, expr := range include {
 		re0, err := regexp.Compile(expr)
 		if err != nil {
 			esc := regexp.QuoteMeta(expr)
 			re1, _ := regexp.Compile(esc)
 			re0 = re1
 		}
-		filter = append(filter, re0)
+		included = append(included, re0)
+	}
+
+	for _, expr := range exclude {
+		re0, err := regexp.Compile(expr)
+		if err != nil {
+			esc := regexp.QuoteMeta(expr)
+			re1, _ := regexp.Compile(esc)
+			re0 = re1
+		}
+		excluded = append(excluded, re0)
 	}
 
 	return func(name string) bool {
-		for _, f := range filter {
-			if f.MatchString(name) {
-				return true
+		incl, excl := false, false
+
+		for _, f := range included {
+			if incl = f.MatchString(name); incl {
+				break
 			}
 		}
-		return false
+		if incl {
+			for _, f := range excluded {
+				if excl = f.MatchString(name); excl {
+					break
+				}
+			}
+		}
+		return incl && !excl
 	}
 }
 

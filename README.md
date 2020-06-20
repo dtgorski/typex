@@ -144,7 +144,7 @@ Options:
         Replace matching portions of <old-path> in a fully
         qualified type name with <new-path> string. Repeating
         the -r option is allowed, substitutions will perform
-        successively. The <old-path> can a regular expression.
+        successively. <old-path> can be a regular expression.
         
         The path replacement/relocation can be used to modify
         locations of type hierarchies, e.g. prune off the
@@ -152,10 +152,16 @@ Options:
         by omitting the <new-path> part after the colon. 
 
     -t  Go tests (files suffixed _test.go) will be included
-        in the result tree available for a filter expression.
-    
+        in the result tree available for a filter expression
+
     -u  Unexported types (lowercase names) will be included
         in the result tree available for a filter expression.
+
+    -x <name> 
+        Exclude type names from export. Repeating this option
+        is allowed, all expressions aggregate to an OR query.
+        The exclusion filter can be a type name, a path part
+        or a regular expression.
 
 More options:
     -h  Display this usage help and exit.
