@@ -15,7 +15,7 @@ import (
 )
 
 type (
-	// TypeRender ...
+	// TypeRender renders Go types.
 	TypeRender struct {
 		PathReplaceFunc   typex.PathReplaceFunc
 		IncludeUnexported bool
@@ -29,7 +29,7 @@ type (
 	}
 )
 
-// Render ...
+// Render converts a TypeMap to a PathMap.
 func (r *TypeRender) Render(m typex.TypeMap) typex.PathMap {
 	r.indent = 0
 	pathMap := make(typex.PathMap)

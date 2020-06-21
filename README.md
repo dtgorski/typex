@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/dtgorski/typex.svg?branch=master)](https://travis-ci.org/dtgorski/typex)
 [![Coverage Status](https://coveralls.io/repos/github/dtgorski/typex/badge.svg?branch=master)](https://coveralls.io/github/dtgorski/typex?branch=master)
+[![Go Report Card](https://goreportcard.com/badge/github.com/dtgorski/typex)](https://goreportcard.com/report/github.com/dtgorski/typex)
 
 ## typex
 

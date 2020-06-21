@@ -30,7 +30,7 @@ func TestNewModuleLayout_Type(t *testing.T) {
 	tr := TypeRender{PathReplaceFunc: re}
 
 	buf := &bytes.Buffer{}
-	tw := typex.TreeWalker{Layout: NewModuleLayout(buf)}
+	tw := typex.TreeWalk{Layout: NewModuleLayout(buf)}
 
 	if err := tw.Walk(tr.Render(types, false)); err != nil { // <- false
 		t.Error("unexpected")
@@ -54,7 +54,7 @@ func TestNewModuleLayout_Class(t *testing.T) {
 	tr := TypeRender{PathReplaceFunc: re}
 
 	buf := &bytes.Buffer{}
-	tw := typex.TreeWalker{Layout: NewModuleLayout(buf)}
+	tw := typex.TreeWalk{Layout: NewModuleLayout(buf)}
 
 	if err := tw.Walk(tr.Render(types, true)); err != nil { // <- true
 		t.Error("unexpected")

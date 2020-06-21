@@ -53,7 +53,9 @@ func CreatePathFilterFunc(include, exclude []string) PathFilterFunc {
 	}
 }
 
-// CreatePathReplaceFunc ...
+// CreatePathReplaceFunc returns the default path and name
+// relocation function. The result is basically sanitized
+// but bad input will lead to bad output.
 func CreatePathReplaceFunc(list []string) PathReplaceFunc {
 	type replace struct {
 		old *regexp.Regexp

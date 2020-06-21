@@ -10,25 +10,26 @@ import (
 )
 
 type (
-	// TreeWalker ...
-	TreeWalker struct {
+	// TreeWalk knows about Layout.
+	TreeWalk struct {
 		Layout
 		indent int
 	}
 
-	// Layout ...
+	// The Layout interface shapes a type visitor.
 	Layout interface {
 		Enter(path string, last bool)
 		Print(line string, first, last bool)
 		Leave(path string, last bool)
 	}
 
-	// PathMap ...
+	// PathMap carries the mapping between the fully
+	// qualified import paths and their type projections.
 	PathMap map[string]string
 )
 
-// Walk ...
-func (t *TreeWalker) Walk(m PathMap) error {
+// Walk traverses a PathMap according to the paths.
+func (t *TreeWalk) Walk(m PathMap) error {
 	if len(m) == 0 {
 		return nil
 	}

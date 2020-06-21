@@ -75,7 +75,7 @@ func exportGo(opts options, types typex.TypeMap) error {
 		PathReplaceFunc:   typex.CreatePathReplaceFunc(opts.replaceParts),
 		IncludeUnexported: *opts.includeUnexp,
 	}
-	tw := typex.TreeWalker{
+	tw := typex.TreeWalk{
 		Layout: g0.NewTreeLayout(os.Stdout),
 	}
 	return tw.Walk(tr.Render(types))
@@ -86,7 +86,7 @@ func exportTs(opts options, types typex.TypeMap, exportObjs bool) error {
 		PathReplaceFunc:   typex.CreatePathReplaceFunc(opts.replaceParts),
 		IncludeUnexported: *opts.includeUnexp,
 	}
-	tw := typex.TreeWalker{
+	tw := typex.TreeWalk{
 		Layout: ts.NewModuleLayout(os.Stdout),
 	}
 	return tw.Walk(tr.Render(types, exportObjs))

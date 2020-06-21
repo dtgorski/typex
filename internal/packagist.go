@@ -12,7 +12,7 @@ import (
 )
 
 type (
-	// Packagist ...
+	// Packagist carries inspection meta data.
 	Packagist struct {
 		PackageLoaderFunc PackageLoaderFunc
 		PathFilterFunc    PathFilterFunc
@@ -103,17 +103,8 @@ func (p *Packagist) visit(t types.Type) {
 		p.visit(tt.Elem())
 
 	case *types.Interface:
-		for i, n := 0, tt.NumEmbeddeds(); i < n; i++ {
-			nn := tt.EmbeddedType(i).(*types.Named)
-			if p.isExported(nn.String()) {
-				p.visit(tt.EmbeddedType(i))
-			}
-		}
-		for i, n := 0, tt.NumMethods(); i < n; i++ {
-			if p.isExported(tt.Method(i).Name()) {
-				p.visit(tt.Method(i).Type())
-			}
-		}
+		p.visitInterface(tt)
+
 	case *types.Map:
 		p.visit(tt.Key())
 		p.visit(tt.Elem())
@@ -135,14 +126,33 @@ func (p *Packagist) visit(t types.Type) {
 		p.visit(tt.Elem())
 
 	case *types.Struct:
-		for i := 0; i < tt.NumFields(); i++ {
-			if p.isExported(tt.Field(i).Name()) {
-				p.visit(tt.Field(i).Type())
-			}
-		}
+		p.visitStruct(tt)
+
 	case *types.Tuple:
 		for i, n := 0, tt.Len(); i < n; i++ {
 			p.visit(tt.At(i).Type())
+		}
+	}
+}
+
+func (p *Packagist) visitInterface(t *types.Interface) {
+	for i, n := 0, t.NumEmbeddeds(); i < n; i++ {
+		nn := t.EmbeddedType(i).(*types.Named)
+		if p.isExported(nn.String()) {
+			p.visit(t.EmbeddedType(i))
+		}
+	}
+	for i, n := 0, t.NumMethods(); i < n; i++ {
+		if p.isExported(t.Method(i).Name()) {
+			p.visit(t.Method(i).Type())
+		}
+	}
+}
+
+func (p *Packagist) visitStruct(t *types.Struct) {
+	for i := 0; i < t.NumFields(); i++ {
+		if p.isExported(t.Field(i).Name()) {
+			p.visit(t.Field(i).Type())
 		}
 	}
 }

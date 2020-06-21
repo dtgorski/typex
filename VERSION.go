@@ -3,4 +3,4 @@
 package main
 
 // Version ... bump occasionally.
-const Version = "v0.3.1"
+const Version = "v0.3.2"

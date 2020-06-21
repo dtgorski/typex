@@ -18,7 +18,7 @@ type (
 	}
 )
 
-// NewTreeLayout ...
+// NewTreeLayout implements the Layout interface.
 func NewTreeLayout(w io.Writer) typex.Layout {
 	return &treeLayout{
 		writer:  w,

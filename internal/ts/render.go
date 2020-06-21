@@ -15,7 +15,7 @@ import (
 )
 
 type (
-	// TypeRender ...
+	// TypeRender renders TypeScript types or classes.
 	TypeRender struct {
 		PathReplaceFunc   typex.PathReplaceFunc
 		IncludeUnexported bool
@@ -31,11 +31,11 @@ type (
 	}
 )
 
-// Render ...
-func (r *TypeRender) Render(m typex.TypeMap, exportObjs bool) typex.PathMap {
+// Render converts a TypeMap to a PathMap.
+func (r *TypeRender) Render(m typex.TypeMap, exportObj bool) typex.PathMap {
 	r.indent = 0
 
-	expoObj := exportObjs
+	exClass := false
 	pathMap := make(typex.PathMap)
 
 	for p, t := range m {
@@ -45,18 +45,18 @@ func (r *TypeRender) Render(m typex.TypeMap, exportObjs bool) typex.PathMap {
 		path, name := r.pathAndName(p)
 		buf, typ := bytes.Buffer{}, t.Underlying()
 
-		if expoObj = exportObjs; expoObj {
-			_, expoObj = typ.(*types.Struct)
+		if exClass = exportObj; exClass {
+			_, exClass = typ.(*types.Struct)
 		}
 		ctx := context{
 			writer:   &buf,
 			seenType: make([]types.Type, 0),
-			needCtor: expoObj,
-			expoObjs: expoObj,
+			needCtor: exClass,
+			expoObjs: exClass,
 		}
 		r.writeType(ctx, typ)
 
-		if expoObj {
+		if exClass {
 			pathMap[path] = "export class " + name + " " + buf.String()
 		} else {
 			pathMap[path] = "export type " + name + " = " + buf.String()

@@ -31,7 +31,7 @@ func TestNewTreeLayout(t *testing.T) {
 	tr := TypeRender{PathReplaceFunc: re}
 
 	buf := &bytes.Buffer{}
-	tw := typex.TreeWalker{Layout: NewTreeLayout(buf)}
+	tw := typex.TreeWalk{Layout: NewTreeLayout(buf)}
 
 	err = tw.Walk(tr.Render(types))
 	if err != nil {

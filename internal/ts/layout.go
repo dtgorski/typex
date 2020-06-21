@@ -17,7 +17,7 @@ type (
 	}
 )
 
-// NewModuleLayout ...
+// NewModuleLayout implements the Layout interface.
 func NewModuleLayout(w io.Writer) typex.Layout {
 	return &moduleLayout{writer: w}
 }
