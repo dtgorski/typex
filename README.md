@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/dtgorski/typex.svg?branch=master)](https://travis-ci.org/dtgorski/typex)
 [![Coverage Status](https://coveralls.io/repos/github/dtgorski/typex/badge.svg?branch=master)](https://coveralls.io/github/dtgorski/typex?branch=master)
-[![Go Report Card](https://goreportcard.com/badge/github.com/dtgorski/typex)](https://goreportcard.com/report/github.com/dtgorski/typex)
+[![Open Issues](https://img.shields.io/github/issues/dtgorski/typex.svg)](https://github.com/dtgorski/typex/issues)
+[![Report Card](https://goreportcard.com/badge/github.com/dtgorski/typex)](https://goreportcard.com/report/github.com/dtgorski/typex)
 
 ## typex
 
@@ -20,8 +21,7 @@ As an additional feature, ```typex``` exports the result tree as a [TypeScript](
 **Go type hierarchy layout**
   ```
   $ typex -f=Rune io/...
-  ```
-  ```
+
   ├── error interface {
   │       Error() string
   │   }
@@ -35,12 +35,31 @@ As an additional feature, ```typex``` exports the result tree as a [TypeScript](
               UnreadRune() error
           }
   ```
+  ```
+  $ typex -f=Render github.com/dtgorski/typex/...
+
+  └── github.com
+      └── dtgorski
+          └── typex
+              └── internal
+                  ├── PathReplaceFunc func(string) string
+                  ├── go
+                  │   └── TypeRender struct {
+                  │           PathReplaceFunc internal.PathReplaceFunc
+                  │           IncludeUnexported bool
+                  │       }
+                  └── ts
+                      └── TypeRender struct {
+                              PathReplaceFunc internal.PathReplaceFunc
+                              IncludeUnexported bool
+                          }
+
+  ```
 
 **TypeScript value object layout**
   ```
   $ typex -f=File -l=ts-class mime/multipart
-  ```
-  ```
+
   export module mime {
       export module multipart {
           export class FileHeader {
@@ -62,8 +81,7 @@ As an additional feature, ```typex``` exports the result tree as a [TypeScript](
 **TypeScript bare type layout**
   ```
   $ typex -f=File -l=ts-type mime/multipart
-  ```
-  ```
+
   export module mime {
       export module multipart {
           export type FileHeader = {

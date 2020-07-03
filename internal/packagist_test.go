@@ -56,8 +56,8 @@ func TestInspector_Inspect_3(t *testing.T) {
 }
 
 type TestType struct {
-	private [10]chan bool
-	Public  map[int]int
+	_      [10]chan bool
+	Public map[int]int
 }
 
 func TestInspector_Inspect_4(t *testing.T) {

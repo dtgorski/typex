@@ -35,7 +35,7 @@ type (
 func (r *TypeRender) Render(m typex.TypeMap, exportObj bool) typex.PathMap {
 	r.indent = 0
 
-	exClass := false
+	var exClass bool
 	pathMap := make(typex.PathMap)
 
 	for p, t := range m {
