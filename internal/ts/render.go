@@ -194,6 +194,10 @@ func (r *TypeRender) writeStruct(ctx context, t *types.Struct) {
 			r.write(ctx, "?")
 		}
 		r.write(ctx, ": ")
+
+		if _, ok := t.Field(i).Type().(*types.Pointer); ok {
+			r.write(ctx, "null | ")
+		}
 		r.writeType(ctx, typ)
 		r.write(ctx, ",")
 		void = false
