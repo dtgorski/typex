@@ -203,6 +203,9 @@ This tool relies heavily on Go's package managing subsystem and
 is bound to its features and environmental execution context.
 ```
 
+### Known issues
+* Occasional(?) ```internal error``` from Go's package managing subsystem [has been reported](https://github.com/dtgorski/typex/issues/4) on Go 1.14.6 darwin/amd64. Newer Go versions >= 1.15 seem to be not affected.
+
 ### Disclaimer
 The implementation and features of ```typex``` follow the [YAGNI](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it) principle.
 There is no claim for completeness or reliability.
