@@ -3,6 +3,7 @@
 [![Open Issues](https://img.shields.io/github/issues/dtgorski/typex.svg)](https://github.com/dtgorski/typex/issues)
 [![Report Card](https://goreportcard.com/badge/github.com/dtgorski/typex)](https://goreportcard.com/report/github.com/dtgorski/typex)
 [![Awesome Go](https://awesome.re/badge.svg)](https://github.com/avelino/awesome-go#user-content-go-tools)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdtgorski%2Ftypex.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fdtgorski%2Ftypex?ref=badge_shield)
 
 ## typex
 
@@ -227,3 +228,6 @@ $ make
 
 ### License
 [MIT](https://opensource.org/licenses/MIT) - © dtg [at] lengo [dot] org
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdtgorski%2Ftypex.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fdtgorski%2Ftypex?ref=badge_large)
