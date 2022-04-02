@@ -1,3 +1,6 @@
+#### v0.3.5
+* Updated dependencies: ```golang.org/x/tools``` due to Go 1.18 modifications
+
 #### v0.3.4
 * Updated dependencies: ```golang.org/x/tools```
 

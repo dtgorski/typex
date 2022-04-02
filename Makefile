@@ -13,14 +13,14 @@ build: clean            # Builds a static binary to ./bin/typex
 
 debug: clean            # Starts debugger [:2345] with ./bin/typex
 	@go build -gcflags "all=-N -l" -o ./bin/typex .
-	dlv --listen=:2345 --headless=true --api-version=2 exec ./bin/typex $(ARGS)
+	dlv --listen=:2345 --headless=true --api-version=2 --accept-multiclient exec ./bin/typex $(ARGS)
 
 install: clean          # Compiles and installs typex in Go environment
 	@go install -trimpath -ldflags "-s -w" .
 
 test: clean             # Runs tests, reports coverage
-	@go test -v -count=1 -covermode=atomic -coverprofile=./coverage.out -coverpkg=./internal/... ./internal/...
-	@go tool cover -html=./coverage.out -o ./coverage.html && echo "coverage: <file://$(PWD)/coverage.html>"
+	@go test -v -count=1 -covermode=atomic -coverprofile=./coverage.out -coverpkg=./internal ./internal/...
+	@go tool cover -html=./coverage.out -o ./coverage.html && echo "\ncoverage: <file://$(PWD)/coverage.html>"
 
 tidy:                  # Formats source files, cleans go.mod
 	@gofmt -w .
