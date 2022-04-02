@@ -10,7 +10,7 @@ Examine [Go](https://golang.org/) types and their transitive dependencies. Expor
 
 ### Installation
 ```
-go get -u github.com/dtgorski/typex
+go install github.com/dtgorski/typex@latest
 ```
 
 ### Synopsis
