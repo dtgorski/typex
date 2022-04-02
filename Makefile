@@ -1,4 +1,4 @@
-.PHONY: help clean build debug install test tidy sniff .travis
+.PHONY: help clean build debug install test tidy sniff
 
 help:                   # Displays this list
 	@echo; grep "^[a-z][a-zA-Z0-9_<> -]\+:" Makefile | sed -E "s/:[^#]*?#?(.*)?/\r\t\t\1/" | sed "s/^/ make /"; echo
@@ -28,11 +28,4 @@ tidy:                  # Formats source files, cleans go.mod
 
 sniff:                  # Checks format and runs linter (void on success)
 	@gofmt -d .
-	@2>/dev/null revive -config .revive.toml ./... || echo "get a linter first:  go install github.com/mgechev/revive"
-
-.travis:                # Travis CI (see .travis.yml), runs tests
-ifndef TRAVIS
-	@echo "Fail: requires Travis runtime"
-else
-	@$(MAKE) test --no-print-directory && goveralls -coverprofile=./coverage.out -service=travis-ci
-endif
+	@2>/dev/null revive -config .revive.toml ./... || echo "get a linter first:  go install github.com/mgechev/revive@latest"

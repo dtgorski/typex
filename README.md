@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/dtgorski/typex.svg?branch=master)](https://travis-ci.org/dtgorski/typex)
-[![Coverage Status](https://coveralls.io/repos/github/dtgorski/typex/badge.svg?branch=master)](https://coveralls.io/github/dtgorski/typex?branch=master)
 [![Open Issues](https://img.shields.io/github/issues/dtgorski/typex.svg)](https://github.com/dtgorski/typex/issues)
 [![Report Card](https://goreportcard.com/badge/github.com/dtgorski/typex)](https://goreportcard.com/report/github.com/dtgorski/typex)
 [![Awesome Go](https://awesome.re/badge.svg)](https://github.com/avelino/awesome-go#user-content-go-tools)
@@ -54,7 +52,6 @@ As an additional feature, ```typex``` exports the result tree as a [TypeScript](
                               PathReplaceFunc internal.PathReplaceFunc
                               IncludeUnexported bool
                           }
-
   ```
 
 **TypeScript value object layout**

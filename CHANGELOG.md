@@ -1,3 +1,9 @@
+#### v0.3.7
+* Removed Travis CI
+
+#### v0.3.6
+* Changed the ```typex``` installation command in README 
+
 #### v0.3.5
 * Updated dependencies: ```golang.org/x/tools``` due to Go 1.18 modifications
 
