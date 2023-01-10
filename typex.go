@@ -11,7 +11,7 @@ import (
 	"strings"
 
 	typex "github.com/dtgorski/typex/internal"
-	"github.com/dtgorski/typex/internal/go"
+	g0 "github.com/dtgorski/typex/internal/go"
 	"github.com/dtgorski/typex/internal/ts"
 )
 

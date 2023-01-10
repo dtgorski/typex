@@ -90,8 +90,18 @@ func (p *Packagist) filter(pkg *packages.Package) {
 		if !p.PathFilterFunc(path) {
 			continue
 		}
-		p.visit(obj.Type())
+
+		if _, ok := obj.(*types.Func); ok {
+			p.visitFunc(obj.Type(), path)
+		} else {
+			p.visit(obj.Type())
+		}
 	}
+}
+
+func (p *Packagist) visitFunc(t types.Type, path string) {
+	p.typeMap[path] = t
+	p.visit(t)
 }
 
 func (p *Packagist) visit(t types.Type) {
