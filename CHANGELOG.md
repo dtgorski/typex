@@ -1,3 +1,6 @@
+#### v0.3.8
+* Updated dependencies: ```golang.org/x/tools```
+
 #### v0.3.7
 * Removed Travis CI
 
